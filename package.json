@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "test": "wdio run wdio.conf.js",
-    "repl": "wdio repl chrome"
+    "repl": "wdio repl chrome",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,8 @@
     "allure-commandline": "^2.13.8",
     "chai": "^4.3.0",
     "chromedriver": "^88.0.0",
+    "eslint": "^7.20.0",
+    "eslint-plugin-wdio": "^7.0.0",
     "wdio-chromedriver-service": "^6.0.4"
   }
 }
