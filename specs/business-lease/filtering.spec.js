@@ -1,17 +1,14 @@
 
 const businessLeasePage = require('../../src/ui/pages/BusinessLeaseVehiclesPage');
 
-describe('My smoke test', () => {
+describe('business lease filtering feature', () => {
     before(() => {
         businessLeasePage.open();
         businessLeasePage.acceptAllCookies();
     });
 
-    it('should open main page', () => {
+    it('should display standard set of filters after opening', () => {
 
-        $('a[data-key="Electric"]').click();
-
-        browser.pause(10000);
     });
 });
 
