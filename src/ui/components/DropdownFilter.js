@@ -34,7 +34,7 @@ class DropdownFilter {
     }
 
     selectItem({ name, close = true }) {
-        if (!this.supportedFilterIds.keys().include(name)) {
+        if (!Object.keys(this.supportedFilterIds).includes(name)) {
             throw new Error(`fuel filter ${name} cannot be selected`);
         }
 
