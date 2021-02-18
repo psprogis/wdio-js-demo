@@ -1,6 +1,14 @@
 const BasePage = require('./BasePage');
+const DropdownFilter = require('../components/DropdownFilter');
 
 class BusinessLeaseVehiclesPage extends BasePage {
+    constructor() {
+        super();
+
+        // TODO: hide all filters in Filters component
+        this.fuelFilter = new DropdownFilter({ orderNumber: 5 });
+    }
+
     open() {
         return super.open('business/showroom/');
     }
@@ -26,7 +34,6 @@ class BusinessLeaseVehiclesPage extends BasePage {
 
     getFilterNames() {
         // TODO: create filters component
-        // [data-component="desktop-filters"]
         return $$('[data-component="desktop-filters"] [data-e2e-heading]').map(element => element.getText());
     }
 }
