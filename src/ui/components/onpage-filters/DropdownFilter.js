@@ -1,6 +1,7 @@
 const log = require('log4js').getLogger('dropdown-filter');
+const AbstractFilter = require('./AbstractOnPageFilter');
 
-class DropdownFilter {
+class DropdownFilter extends AbstractFilter {
 
     // can be moved to configuration
     static timeouts = {
@@ -8,6 +9,7 @@ class DropdownFilter {
     };
 
     constructor({ orderNumber, supportedFilterIds }) {
+        super();
         this.orderNumber = orderNumber;
         this.supportedFilterIds = supportedFilterIds;
     }
@@ -19,18 +21,6 @@ class DropdownFilter {
         const number = this.orderNumber - 1;  // TODO: check number is valid
 
         return $$(baseSelector)[number];
-    }
-
-    open() {
-        // check if already opened ^ direction is up
-
-        this.toggle();
-
-        // check items appear
-    }
-
-    getTitle() {
-        return this.root.$('[data-e2e-heading]').getText();
     }
 
     selectSingleItem({ name, close = true }) {
@@ -78,23 +68,6 @@ class DropdownFilter {
 
         // do not use #, since some ids contains more than 1 word
         this.root.$(`[id="${this.supportedFilterIds[name]}"]`).click({ x: 2, y: 2 });
-    }
-
-    // probably the most strange functionality
-    save() {
-        throw new Error('not implemented yet');
-    }
-
-    close() {
-        // check if already closed ^ direction is down
-
-        this.toggle();
-
-        // check items were hidden
-    }
-
-    toggle() {
-        this.root.click();
     }
 }
 

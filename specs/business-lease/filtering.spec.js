@@ -55,9 +55,10 @@ describe('business lease filtering feature', () => {
         // TODO: extract common verification part and use it here
     });
 
-    it.only('should work with multiple filters', () => {
+    it.skip('should work with multiple filters', () => {
         businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric'] });
         businessLeasePage.popularFiltersFilter.selectSingleItem({ name: 'Best deals' });
+        businessLeasePage.makeModelFilter.selectSingleItem({ name: 'Tesla' })
 
         // TODO: extract common verification part and use it here
     });

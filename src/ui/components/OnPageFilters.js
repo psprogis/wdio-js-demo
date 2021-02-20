@@ -1,6 +1,7 @@
-const DropdownFilter = require('./DropdownFilter');
+const DropdownFilter = require('./onpage-filters/DropdownFilter');
+const DropdownSearchFilter = require('./onpage-filters/DropdownSearchFilter');
 
-// replace with factory ?
+// replace with factory ? or move to index.js in onpage-filters
 class OnPageFilters {
 
     constructor() {
@@ -22,7 +23,17 @@ class OnPageFilters {
                 'Configure yourself': 'Configure yourself',
                 'No stress plan': 'No stress plan',
             }
-        })
+        });
+
+        this.makeModelFilter = new DropdownSearchFilter({
+            orderNumber: 2,
+            supportedFilterIds: {
+                'Audi': 'make-AUDI',
+                'BMW': 'make-BMW',
+                'Mercedes': 'make-MERCEDES',
+                'Tesla': 'make-TESLA',
+            },
+        });
     }
 
 }

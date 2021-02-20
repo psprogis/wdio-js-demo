@@ -11,6 +11,7 @@ class BusinessLeaseVehiclesPage extends BasePage {
 
         this.fuelFilter = onPageFilters.fuelFilter;
         this.popularFiltersFilter = onPageFilters.popularFiltersFilter;
+        this.makeModelFilter = onPageFilters.makeModelFilter;
 
         this.filteringResults = new FilteringResults();
     }

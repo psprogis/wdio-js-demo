@@ -50,5 +50,6 @@ Starting web server...
 
 ## Todo
 - add automation diagram.
+- extract common verification steps and re-use them in several testcases.
 - add "cucumber" (allure) [steps](https://webdriver.io/docs/allure-reporter).
 - (minor) eslint default parser does not work with static properties, fix configuration with babel-parser.
