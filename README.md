@@ -51,3 +51,4 @@ Starting web server...
 ## Todo
 - add automation diagram.
 - add "cucumber" (allure) [steps](https://webdriver.io/docs/allure-reporter).
+- (minor) eslint default parser does not work with static properties, fix configuration with babel-parser.
