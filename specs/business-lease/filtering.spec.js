@@ -1,4 +1,6 @@
+const log = require('log4js').getLogger('spec-logger');
 const businessLeasePage = require('../../src/ui/pages/BusinessLeaseVehiclesPage');
+const dieselFilteringResults = require('../../test-data/filtering/dieselsFirstPage');
 
 describe('business lease filtering feature', () => {
     before(() => {
@@ -19,24 +21,30 @@ describe('business lease filtering feature', () => {
     });
 
     // create 2 specs: simple filtering and second one for the complex filters
-    it('should filter all Mitsubishi cars', () => {
+    it('should filter all Diesel cars', () => {
         businessLeasePage.fuelFilter.selectItem({ name: 'Diesel' });
+
         const filteringResults = businessLeasePage.getFilteringResults();
+        log.info(filteringResults);
 
         expect(businessLeasePage.getTotalCarsNumber()).toBeGreaterThan(2000);
         expect(filteringResults.length).toBe(12);
-        // show more filtered cars button exists: canShowMore() ?
-        // move exapected results to data folder ?
-        // expect(filteringResults).toEqual(expect.arrayContaining([
-        //     {
-        //         description: { topText: '23 to choose from', heading: 'BMW 3' },
-        //         price: { localizedPrice: '€ 531' },
-        //     },
-        //     {
-        //         description: { topText: '24 to choose from', heading: 'Volvo Xc40' },
-        //         price: { localizedPrice: '€ 464' },
-        //     },
-        // ]));
+
+        // expect(businessLeasePage.canShowMore()).toBe(true);
+
+        // we can assert all results
+        // expect(filteringResults).toEqual(dieselFilteringResults);
+        // or just check 2 items
+        expect(filteringResults).toEqual(expect.arrayContaining([
+            {
+                description: { topText: '23 to choose from', heading: 'BMW 3' },
+                price: { localizedPrice: '€ 531' },
+            },
+            {
+                description: { topText: '24 to choose from', heading: 'Volvo Xc40' },
+                price: { localizedPrice: '€ 464' },
+            },
+        ]));
     });
 
     it.skip('should work with complex filtering')
