@@ -1,3 +1,5 @@
+require('./log4js-config').init();
+
 const wdioConfig = {
     runner: 'local',
     specs: [
@@ -43,7 +45,7 @@ const wdioConfig = {
     reporters: ['spec'],
     mochaOpts: {
         ui: 'bdd',
-        timeout: 60000
+        timeout: 120000
     },
 
     beforeSession: function (config, capabilities, specs) {
@@ -54,9 +56,10 @@ const wdioConfig = {
     },
 
     before: function (capabilities, specs) {
-        browser.setWindowSize(1400, 900);
+        browser.setWindowSize(1600, 1000);
     },
 
+    // afterStep ?
     afterTest: function(test, context, { error, result, duration, passed, retries }) {
         if (test.error !== undefined) {
             browser.takeScreenshot();

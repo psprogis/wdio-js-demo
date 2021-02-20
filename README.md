@@ -50,4 +50,4 @@ Starting web server...
 
 ## Todo
 - add automation diagram.
-- add "cucumber" steps.
+- add "cucumber" (allure) [steps](https://webdriver.io/docs/allure-reporter).

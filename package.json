@@ -5,8 +5,10 @@
   "description": "Demo project for webdriver.io + vanilla js",
   "main": "index.js",
   "scripts": {
+    "cleanup": "rimraf allure-results allure-report",
     "test": "wdio run wdio.conf.js",
     "repl": "wdio repl chrome",
+    "report": "allure generate && allure open",
     "lint": "eslint ."
   },
   "repository": {
@@ -28,6 +30,8 @@
     "chromedriver": "^88.0.0",
     "eslint": "^7.20.0",
     "eslint-plugin-wdio": "^7.0.0",
+    "log4js": "^6.3.0",
+    "rimraf": "^3.0.2",
     "wdio-chromedriver-service": "^6.0.4"
   }
 }
