@@ -67,10 +67,16 @@ const wdioConfig = {
     },
 }
 
+if (process.env.SELENIUM_HUB_HOST) {
+    wdioConfig.hostname = process.env.SELENIUM_HUB_HOST;
+    wdioConfig.port = 4444;
+    wdioConfig.path = '/wd/hub'
+}
+
 if (process.env.DEBUG === '1') {
-    console.log("###### Running in debug mode! ######");
+    console.log('###### Running in debug mode! ######');
     wdioConfig.maxInstances = 1;
-    wdioConfig["execArgv"] = ["--inspect=127.0.0.1:5858"];
+    wdioConfig['execArgv'] = ['--inspect=127.0.0.1:5858'];
     wdioConfig.mochaOpts.timeout = 360000;
 }
 

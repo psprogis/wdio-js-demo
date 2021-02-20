@@ -18,6 +18,8 @@ jobs:
         uses: Xotabu4/selenoid-github-action@v1
       - uses: actions/checkout@v1
       - name: Run test
+        env:
+          SELENIUM_HUB_HOST: 'localhost'
         run: npm cit
       - name: Create Report
         if: always()

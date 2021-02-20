@@ -11,7 +11,7 @@ describe('business lease filtering feature', () => {
         // will get deterministic behavior, can assert concrete numbers in search results, etc.
     });
 
-    it.skip('should quick links, display standard set of filters and total cars number after opening', () => {
+    it('should quick links, display standard set of filters and total cars number after opening', () => {
         const { quickLinkNames, filterNames, totalCarsNumber } = businessLeasePage.getPageSummary();
 
         expect(quickLinkNames).toEqual(['Electric', 'SUV', 'Automatic', 'Hybrid', 'Petrol', 'Premium']);
