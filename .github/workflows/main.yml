@@ -1,0 +1,29 @@
+name: wdio-js-demo
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+      branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    name: Run wdio tests
+    steps:
+      - name: Start Selenoid Server
+        uses: Xotabu4/selenoid-github-action@v1
+      - uses: actions/checkout@v1
+      - name: Run test
+        run: npm cit
+      - name: Create Report
+        if: always()
+        run: npm run report:generate
+      - uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: allure-report
+          path: ./allure-report
