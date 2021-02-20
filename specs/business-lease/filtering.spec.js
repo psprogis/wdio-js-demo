@@ -1,6 +1,6 @@
 const log = require('log4js').getLogger('spec-logger');
 const businessLeasePage = require('../../src/ui/pages/BusinessLeaseVehiclesPage');
-const dieselFilteringResults = require('../../test-data/filtering/dieselsFirstPage');
+const dieselFilteringResults = require('../../expected-results/filtering/dieselsFirstPage');
 
 describe('business lease filtering feature', () => {
 
@@ -25,7 +25,7 @@ describe('business lease filtering feature', () => {
 
     // create 2 specs: simple filtering and second one for the complex filters
     it('should filter all Diesel cars', () => {
-        businessLeasePage.fuelFilter.selectItem({ name: 'Diesel' });
+        businessLeasePage.fuelFilter.selectSingleItem({ name: 'Diesel' });
 
         const filteringResults = businessLeasePage.getFilteringResults();
         log.info(filteringResults);
@@ -50,7 +50,17 @@ describe('business lease filtering feature', () => {
         ]));
     });
 
-    it.skip('should work with complex filtering')
+    it.skip('should filter by 2+ criteria of the same filter', () => {
+        businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric', 'Hybrid'] });
+        // TODO: extract common verification part and use it here
+    });
+
+    it.only('should work with multiple filters', () => {
+        businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric'] });
+        businessLeasePage.popularFiltersFilter.selectSingleItem({ name: 'Best deals' });
+
+        // TODO: extract common verification part and use it here
+    });
 
     it.skip('should reset all selected filters');
 
@@ -61,8 +71,6 @@ describe('business lease filtering feature', () => {
     it.skip('should allow to show more filtered results');
 
     it.skip('should save filters');
-
-    // +1 spec: sorting results: most popular, by price (high, low)
 });
 
 

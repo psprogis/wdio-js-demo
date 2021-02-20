@@ -2,27 +2,19 @@ const log = require('log4js').getLogger('dropdown-filter');
 
 class DropdownFilter {
 
-    // generate this list dynamically ?
-    // can be extanded, e.g.: filterName: { id, expectedText, etc. }
-    static supportedFilterIds = {
-        'Diesel':  'fuelType-Diesel',
-        'Electric': 'fuelType-Electric',
-        'Petrol': 'fuelType-Petrol',
-        'Hybrid': 'fuelType-Hybrid',
-    };
-
     // can be moved to configuration
     static timeouts = {
         selectionUpdate: 3000,
     };
 
-    constructor({ orderNumber }) {
+    constructor({ orderNumber, supportedFilterIds }) {
         this.orderNumber = orderNumber;
+        this.supportedFilterIds = supportedFilterIds;
     }
 
     get root() {
-        // [data-component="desktop-filters"] [class^=FiltersContainer] [data-key="OnPageFilter"]
-        // data-key="fuelTypes" but in this case we have to use xpath
+        // or find by name and go up, e.g. data-key="fuelTypes" but in this case we have to use xpath
+        // TODO: can be moved to parent component, e.g. OnPageFilters
         const baseSelector = '[data-component="desktop-filters"] [class^=FiltersContainer] [data-key="OnPageFilter"]';
         const number = this.orderNumber - 1;  // TODO: check number is valid
 
@@ -41,11 +33,7 @@ class DropdownFilter {
         return this.root.$('[data-e2e-heading]').getText();
     }
 
-    selectItem({ name, close = true }) {
-        if (!Object.keys(DropdownFilter.supportedFilterIds).includes(name)) {
-            throw new Error(`fuel filter ${name} cannot be selected`);
-        }
-
+    selectSingleItem({ name, close = true }) {
         const currentTitle = this.getTitle();
         log.debug(`current title: ${currentTitle}`);
 
@@ -57,7 +45,7 @@ class DropdownFilter {
         this.open();
         // x:2, y:2 - workaround to click on checkbox, does not work with default coordinates
         // need to be investigated or we can execute javascript and select checkbox automatically
-        this.root.$(`#${DropdownFilter.supportedFilterIds[name]}`).click({ x: 2, y: 2 });
+        this._select({ name });
 
         browser.waitUntil(() => {
             const newTitle = this.getTitle();
@@ -66,7 +54,7 @@ class DropdownFilter {
             return newTitle === name;  // or we can track results container updates
         }, {
             timeout: DropdownFilter.timeouts.selectionUpdate,
-            timeoutMsg: 'dropbox has incorrect state, title has not been chaged after selection.',
+            timeoutMsg: 'dropbox has incorrect state, title has not been changed after selection.',
         });
 
         // not the best solution, but ok for now
@@ -76,9 +64,20 @@ class DropdownFilter {
     }
 
     selectMultipleItems( { names } ) {
-        names.forEach(name => this.selectItem({ name, close: false }));
+        this.open();
+
+        names.forEach(name => this._select({ name }));
 
         this.close();
+    }
+
+    _select({ name }) {
+        if (!Object.keys(this.supportedFilterIds).includes(name)) {
+            throw new Error(`item ${name} cannot be selected`);
+        }
+
+        // do not use #, since some ids contains more than 1 word
+        this.root.$(`[id="${this.supportedFilterIds[name]}"]`).click({ x: 2, y: 2 });
     }
 
     // probably the most strange functionality

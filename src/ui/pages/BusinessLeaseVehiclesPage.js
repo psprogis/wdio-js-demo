@@ -1,13 +1,16 @@
 const BasePage = require('./BasePage');
-const DropdownFilter = require('../components/DropdownFilter');
+const OnPageFilters = require('../components/OnPageFilters');
 const FilteringResults = require('../components/FilteringResults');
 
 class BusinessLeaseVehiclesPage extends BasePage {
     constructor() {
         super();
 
-        // TODO: hide all filters in Filters component
-        this.fuelFilter = new DropdownFilter({ orderNumber: 5 });
+        // export created object from OnPageFilters? or use factory with static methods ?
+        const onPageFilters = new OnPageFilters();
+
+        this.fuelFilter = onPageFilters.fuelFilter;
+        this.popularFiltersFilter = onPageFilters.popularFiltersFilter;
 
         this.filteringResults = new FilteringResults();
     }
