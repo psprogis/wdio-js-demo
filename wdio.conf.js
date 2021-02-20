@@ -39,10 +39,16 @@ const wdioConfig = {
     // Default request retries count
     connectionRetryCount: 3,
 
-    services: ['chromedriver'],
+    services: [],
 
     framework: 'mocha',
-    reporters: ['spec'],
+    reporters: ['spec',
+        ['allure', {
+            outputDir: 'allure-results',
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+        }]
+    ],
     mochaOpts: {
         ui: 'bdd',
         timeout: 120000
@@ -59,9 +65,8 @@ const wdioConfig = {
         browser.setWindowSize(1600, 1000);
     },
 
-    // afterStep ?
-    afterTest: function(test, context, { error, result, duration, passed, retries }) {
-        if (test.error !== undefined) {
+    afterStep: function(test, context, { error, result, duration, passed, retries }) {
+        if (error) {
             browser.takeScreenshot();
         }
     },
@@ -71,6 +76,8 @@ if (process.env.SELENIUM_HUB_HOST) {
     wdioConfig.hostname = process.env.SELENIUM_HUB_HOST;
     wdioConfig.port = 4444;
     wdioConfig.path = '/wd/hub'
+} else {
+    wdioConfig.services = ["chromedriver"];
 }
 
 if (process.env.DEBUG === '1') {

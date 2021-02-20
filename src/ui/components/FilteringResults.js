@@ -6,10 +6,10 @@ class FilteringResults {
     }
 
     getAllResults() {
-        // card [data-component="VehicleCard"]
         // TODO: best deals, no stress plan
-        // description => data-component="VehicleDescription"
-        // price => data-component="Price"
+
+        // TODO: find out how to wait that results block was completely loaded and remove pause
+        browser.pause(1000);
 
         const results = [];
         this.root.$$('[data-component="VehicleCard"]').forEach(element => {

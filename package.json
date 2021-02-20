@@ -9,6 +9,7 @@
     "test": "wdio run wdio.conf.js",
     "repl": "wdio repl chrome",
     "report": "allure generate && allure open",
+    "report:generate": "allure generate",
     "lint": "eslint ."
   },
   "repository": {

@@ -3,12 +3,15 @@ const businessLeasePage = require('../../src/ui/pages/BusinessLeaseVehiclesPage'
 const dieselFilteringResults = require('../../test-data/filtering/dieselsFirstPage');
 
 describe('business lease filtering feature', () => {
-    before(() => {
-        businessLeasePage.open();
-        businessLeasePage.acceptAllCookies();  // move to global before hook ?
 
+    before(() => {
         // TODO: setup initial state via REST API, db dump, etc. In this case we
         // will get deterministic behavior, can assert concrete numbers in search results, etc.
+    });
+
+    beforeEach(() => {
+        businessLeasePage.open();
+        businessLeasePage.acceptAllCookies();  // move to global before hook ?
     });
 
     it('should quick links, display standard set of filters and total cars number after opening', () => {
