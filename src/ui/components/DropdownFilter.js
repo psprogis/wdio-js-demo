@@ -1,15 +1,23 @@
+const log = require('log4js').getLogger('dropdown-filter');
+
 class DropdownFilter {
+
+    // generate this list dynamically ?
+    // can be extanded, e.g.: filterName: { id, expectedText, etc. }
+    static supportedFilterIds = {
+        'Diesel':  'fuelType-Diesel',
+        'Electric': 'fuelType-Electric',
+        'Petrol': 'fuelType-Petrol',
+        'Hybrid': 'fuelType-Hybrid',
+    };
+
+    // can be moved to configuration
+    static timeouts = {
+        selectionUpdate: 3000,
+    };
+
     constructor({ orderNumber }) {
         this.orderNumber = orderNumber;
-
-        // generate this list dynamically ?
-        // can be extanded, e.g.: filterName: { id, expectedText, etc. }
-        this.supportedFilterIds = {
-            'Diesel':  '#fuelType-Diesel',
-            'Electric': '#fuelType-Electric',
-            'Petrol': '#fuelType-Petrol',
-            'Hybrid': 'fuelType-Hybrid',
-        };
     }
 
     get root() {
@@ -34,14 +42,32 @@ class DropdownFilter {
     }
 
     selectItem({ name, close = true }) {
-        if (!Object.keys(this.supportedFilterIds).includes(name)) {
+        if (!Object.keys(DropdownFilter.supportedFilterIds).includes(name)) {
             throw new Error(`fuel filter ${name} cannot be selected`);
         }
 
-        this.open();
-        this.root.$(this.supportedFilterIds[name]).click({ x: 2, y: 2 });
+        const currentTitle = this.getTitle();
+        log.debug(`current title: ${currentTitle}`);
 
-        // TODO: wait title change
+        if (currentTitle === name) {
+            log.info(`filter is already in correct state, current title: ${currentTitle}, nothing to select.`);
+            return;
+        }
+
+        this.open();
+        // x:2, y:2 - workaround to click on checkbox, does not work with default coordinates
+        // need to be investigated or we can execute javascript and select checkbox automatically
+        this.root.$(`#${DropdownFilter.supportedFilterIds[name]}`).click({ x: 2, y: 2 });
+
+        browser.waitUntil(() => {
+            const newTitle = this.getTitle();
+            log.debug(`new title: ${newTitle}`);
+
+            return newTitle === name;  // or we can track results container updates
+        }, {
+            timeout: DropdownFilter.timeouts.selectionUpdate,
+            timeoutMsg: 'dropbox has incorrect state, title has not been chaged after selection.',
+        });
 
         // not the best solution, but ok for now
         if (close) {

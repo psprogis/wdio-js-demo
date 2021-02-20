@@ -1,5 +1,6 @@
 const BasePage = require('./BasePage');
 const DropdownFilter = require('../components/DropdownFilter');
+const FilteringResults = require('../components/FilteringResults');
 
 class BusinessLeaseVehiclesPage extends BasePage {
     constructor() {
@@ -7,6 +8,8 @@ class BusinessLeaseVehiclesPage extends BasePage {
 
         // TODO: hide all filters in Filters component
         this.fuelFilter = new DropdownFilter({ orderNumber: 5 });
+
+        this.filteringResults = new FilteringResults();
     }
 
     open() {
@@ -37,35 +40,13 @@ class BusinessLeaseVehiclesPage extends BasePage {
         return $$('[data-component="desktop-filters"] [data-e2e-heading]').map(element => element.getText());
     }
 
-    // results component
     getFilteringResults() {
+        return this.filteringResults.getAllResults();
+    }
 
-        const root = $('section[id="Car Offerings Grid Filtered"]');
-        // card [data-component="VehicleCard"]
-        // TODO: best deals, no stress plan
-        // description => data-component="VehicleDescription"
-        // price => data-component="Price"
-
-        const results = [];
-        root.$$('[data-component="VehicleCard"]').forEach(element => {
-            const currentCar = {
-                description: {},
-                price: {},
-            };
-
-            const descriptionComponent = element.$('[data-component="VehicleDescription"]');
-            currentCar.description.topText = descriptionComponent.$('[data-component="TopText"]').getText();
-            currentCar.description.heading = descriptionComponent.$('[data-component="Heading"]').getText();
-            // currentCar.description.text = descriptionComponent.$('[data-component="Text"]').getText(); // FIXME
-
-            const priceComponent = element.$('[data-component="Price"]');
-            currentCar.price.localizedPrice = priceComponent.$('[data-component="LocalizedPrice"]').getText();
-            // skip marketing bullshit with "discounts"
-
-            results.push(currentCar);
-        });
-
-        return results;
+    canShowMore() {
+        throw new Error('not implemented yet.');
+        return this.filteringResults.canShowMore();
     }
 }
 
