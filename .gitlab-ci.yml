@@ -2,18 +2,17 @@ image: ubuntu
 
 stages:
   - start-selenoid
-  - build
   - test
 
 start-selenoid:
   stage: start-selenoid
   script: echo "download cm and start selenoid"
 
-build:
-  stage: build
-  script: echo "running npm install"
-
 test:
   stage: test
-  script: echo "running npm test"
+  services:
+    - selenium/standalone-chrome
+  script:
+    - npm i
+    - npm t
 
