@@ -17,8 +17,15 @@ npm -v
 6.14.8
 ```
 Note: do not use npm 7+, it is still unstable and has some compatibility issues, e.g. `package-lock` breaking changes.
-* java to run selenium-standalone.
-* python ? wdio requires python to use fibers  
+* jdk11+ if you run selenium-standalone.
+* python3 and VSBuild tools since wdio works with fibers (will be installed during node.js installation).
+  You should not do any additional installation with node14+, but if you get the following errors:
+  ```bash
+  MSBUILD : error MSB3428: Could not load the Visual C++ component "VCBuild.exe". To fix this, 1) install the .NET Framework 2.0 SDK, 2) install Microsoft Visual Studio 2005 or 3) add the location of the component to the system path if it is installed elsewhere.
+  Failed at the fibers@5.0.0 install script
+  ```
+  Follow the [https://github.com/nodejs/node-gyp#on-unix](instructions) to fix this.
+  
 * (optional for run w/o chromdriver service) webdriver-manager,
   run `webdriver-manager update` to get the latest versions of drivers
 ```bash
