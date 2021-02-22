@@ -37,7 +37,7 @@ describe('business lease filtering feature', () => {
         expect(filteringResults).toEqual(dieselFilteringResults);
     });
 
-    it.skip('should filter by 2+ criteria of the same filter', () => {
+    it('should filter by 2+ criteria of the same filter', () => {
         businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric', 'Hybrid'] });
 
         const filteringResults = businessLeasePage.getFilteringResults();
@@ -49,7 +49,7 @@ describe('business lease filtering feature', () => {
         // assert only 2 items or we can extract common verification logic into private function (see the next case)
         expect(filteringResults).toEqual(expect.arrayContaining([
             {
-                description: { topText: '23 to choose from', heading: 'BMW 3' },
+                description: { topText: '29 to choose from', heading: 'BMW 3' },
                 price: { localizedPrice: '€ 531' },
             },
             {

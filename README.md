@@ -79,6 +79,7 @@ Report successfully generated to allure-report
 Starting web server...
 # ...
 ```
+![local run](screenshots/local-run.png "local run")
 ### Report
 !insert allure report!.
 
