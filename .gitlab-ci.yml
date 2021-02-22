@@ -4,18 +4,28 @@ variables:
   SELENIUM_HUB_HOST: "selenium__standalone-chrome"
 
 stages:
-  - start-selenoid
   - test
+  - report
 
+# investigate how to start selenoid instead of selenium-chrome
 start-selenoid:
   stage: start-selenoid
-  script: echo "download cm and start selenoid"
+  script:
+    - curl -s https://aerokube.com/cm/bash | bash && ./cm selenoid start
+    - curl http://localhost:4444/status
 
 test:
   stage: test
   services:
     - selenium/standalone-chrome
   script:
-    - npm i
-    - npm t
+    - npm cit
 
+report:
+  stage: report
+  script:
+    - npm run report:generate
+  artifacts:
+    expire_in: 30 days
+    paths:
+      - allure-report
