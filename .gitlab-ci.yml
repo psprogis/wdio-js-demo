@@ -8,11 +8,11 @@ stages:
   - report
 
 # investigate how to start selenoid instead of selenium-chrome
-start-selenoid:
-  stage: start-selenoid
-  script:
-    - curl -s https://aerokube.com/cm/bash | bash && ./cm selenoid start
-    - curl http://localhost:4444/status
+#start-selenoid:
+#  stage: start-selenoid
+#  script:
+#    - curl -s https://aerokube.com/cm/bash | bash && ./cm selenoid start
+#    - curl http://localhost:4444/status
 
 test:
   stage: test
