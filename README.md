@@ -1,7 +1,32 @@
+This repo contains examples of a filtering tests for [https://www.leaseplan.com/en-be/business/showroom/](LeasePlan business showroom page).
+Tools: !describe all tools and links!.
+- webdriver.io@7.
+- mocha and built-in expect.
+- CI: github actions config, gitlab config.  
+- eslint with wdio-plugin.  
+- log4js for logging.
 
-## Task description
+**Table of Contents**
+1. [General automation overview](#general-automation-overview)
+3. [Local run](#local-run)
+  1. [Preconditions and environment](#preconditions-and-environment)
+  2. [How to run](#how-to-run)
+  3. [Report](#report)   
+4. [Run on CI](#run-on-ci)
+    1. [Run on gitlab](#run-on-gitlab)
+    2. [Run on github actions](#run-on-github-actions)
+5. [TODO](#todo)
 
 ## General automation overview
+The following chart describes typical automation "framework" building blocks:
+![console output](screenshots/automation-overview.png "console output")
+[original file on a google drive](https://docs.google.com/drawings/d/1qBoop81kclCIlnatuc5pULY_7pAlh3nD3PX2sYrv6j4/edit?usp=sharing)
+Key features:
+- high-level, clear, readable, easy to understand, verbose specs. Contains only test logic (business cases). Do not contain any webdriver (other frameworks) calls and low-level methods.
+- decouples test logic, test data, and implementation (work with the browser, network, database, etc).
+- services layer: expose only high-level methods (public API). Hide (encapsulate) all interaction with the driver, (ideally, for e2e tests) do not return web elements.
+- easier to maintain and reuse code, e.g. service or UI component can update/change an internal login flow w/o affecting spec file.
+- has rich UI components library: most of the widgets/components on frontend side should have representative class to use in automation. Complex components are built on top of the simple ones. 
 
 ## Local run
 ### Preconditions and environment
@@ -24,7 +49,7 @@ Note: do not use npm 7+, it is still unstable and has some compatibility issues,
   MSBUILD : error MSB3428: Could not load the Visual C++ component "VCBuild.exe". To fix this, 1) install the .NET Framework 2.0 SDK, 2) install Microsoft Visual Studio 2005 or 3) add the location of the component to the system path if it is installed elsewhere.
   Failed at the fibers@5.0.0 install script
   ```
-  Follow the [https://github.com/nodejs/node-gyp#on-unix](instructions) to fix this.
+  Follow the [instructions](https://github.com/nodejs/node-gyp#on-unix) to fix this.
   
 * (optional for run w/o chromdriver service) webdriver-manager,
   run `webdriver-manager update` to get the latest versions of drivers
@@ -54,9 +79,18 @@ Report successfully generated to allure-report
 Starting web server...
 # ...
 ```
+### Report
+!insert allure report!.
+
+## Run on CI
+### Run on gitlab
+!insert screenshots!
+### Run on github actions
+!insert screenshots!
 
 ## Todo
 - add automation diagram.
 - extract common verification steps and re-use them in several testcases.
 - add "cucumber" (allure) [steps](https://webdriver.io/docs/allure-reporter).
+- cleanup gitlab stages: cache node_modules in install and test, configure nginx on a runner to display allure report, etc.
 - (minor) eslint default parser does not work with static properties, fix configuration with babel-parser.
