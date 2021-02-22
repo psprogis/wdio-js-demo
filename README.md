@@ -1,4 +1,4 @@
-This repo contains examples of a filtering tests for [https://www.leaseplan.com/en-be/business/showroom/](LeasePlan business showroom page).
+This repo contains examples of a filtering tests for [LeasePlan business showroom page](https://www.leaseplan.com/en-be/business/showroom/).
 Tools: !describe all tools and links!.
 - webdriver.io@7.
 - mocha and built-in expect.
