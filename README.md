@@ -1,10 +1,10 @@
-This repo contains examples of a filtering tests for [LeasePlan business showroom page](https://www.leaseplan.com/en-be/business/showroom/).
-Tools: !describe all tools and links!.
-- webdriver.io@7.
-- mocha and built-in expect.
-- CI: github actions config, gitlab config.  
-- eslint with wdio-plugin.  
-- log4js for logging.
+This repo contains examples of a filtering tests for [LeasePlan business showroom page](https://www.leaseplan.com/en-be/business/showroom/).  
+Tools:
+- [webdriver.io@7](https://webdriver.io/)
+- [mocha](https://mochajs.org/) and built-in [expect](https://webdriver.io/docs/api/expect-webdriverio/).
+- CI: [github actions](https://github.com/features/actions), [gitlab](https://gitlab.com/).  
+- [eslint](https://eslint.org/) with [wdio-plugin](https://www.npmjs.com/package/eslint-plugin-wdio).  
+- [log4js](https://log4js-node.github.io/log4js-node/) for logging.
 
 **Table of Contents**
 1. [General automation overview](#general-automation-overview)
@@ -92,9 +92,10 @@ Starting web server...
 You can find more information about each run on [Actions tab](https://github.com/psprogis/wdio-js-demo/actions) in github
 
 ## Todo
-- extract common verification steps and re-use them in several testcases.
-- implement more UI components/widget: MonthlyPriceFilter, MoreFilters filter, etc.  
-- add "cucumber" (allure) [steps](https://webdriver.io/docs/allure-reporter).
+- cleanup README, check grammar.
+- add (allure) [steps](https://webdriver.io/docs/allure-reporter).
+- start selenoid on gitlab, instead of selenium standalone service.
+- implement more UI components/widget: MonthlyPriceFilter, MoreFilters filter, etc.
 - cleanup gitlab stages.
 - gitlab: post results to [allure server](https://github.com/kochetkov-ma/allure-server), use nginx or find another way to serve report.  
 - (minor) eslint default parser does not work with static properties, fix configuration with babel-parser.
