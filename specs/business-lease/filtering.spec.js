@@ -25,7 +25,6 @@ describe('business lease filtering feature', () => {
         expect(totalCarsNumber).toBeGreaterThan(5000);
     });
 
-
     it('should filter all Diesel cars', () => {
         businessLeasePage.fuelFilter.selectSingleItem({ name: 'Diesel' });
 
@@ -83,7 +82,14 @@ describe('business lease filtering feature', () => {
 
     it.skip('filters should be displayed after scrolling the page');
 
-    it.skip('should allow to show more filtered results');
+    it('should allow to show more filtered results', () => {
+        businessLeasePage.fuelFilter.selectSingleItem({ name: 'Electric' });
+        businessLeasePage.filteringResults.showMoreFilteredCars();
+
+        const filteringResults = businessLeasePage.getFilteringResults();
+
+        expect(filteringResults.length).toBeGreaterThan(12);
+    });
 
     // TODO:
     // - add separate spec for quick filters

@@ -5,6 +5,12 @@ class FilteringResults {
         return $('section[id="Car Offerings Grid Filtered"]');
     }
 
+    get showMoreButton() {
+        // fix selector, or the best solution: add test-id to Show more results button
+        // do not repeat this in the real project, it is only for the demo purposes
+        return this.root.$('//button[contains(text(), "Show more filtered cars")]');
+    }
+
     getAllResults() {
         // TODO: best deals, no stress plan
 
@@ -36,11 +42,17 @@ class FilteringResults {
     }
 
     canShowMore() {
-        // fix selector, or the best solution: add test-id to Show more results button
-        const showMoreButton = this.root.$$('button[data-e2e-button]')[13];
-
-        return showMoreButton.isDisplayed();
+        // FIXME
+        return this.showMoreButton.isDisplayed();
     }
+
+    showMoreFilteredCars() {
+        if (this.showMoreButton.isExisting) {
+            this.showMoreButton.scrollIntoView();
+            this.showMoreButton.click();
+        }
+    }
+
 }
 
 module.exports = FilteringResults;

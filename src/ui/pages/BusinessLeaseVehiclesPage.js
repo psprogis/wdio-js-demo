@@ -40,7 +40,7 @@ class BusinessLeaseVehiclesPage extends BasePage {
     }
 
     getFilterNames() {
-        // TODO: create filters component, use existing filters here
+        // TODO: use existing filter classes here
         return $$('[data-component="desktop-filters"] [data-e2e-heading]').map(element => element.getText());
     }
 
@@ -53,7 +53,6 @@ class BusinessLeaseVehiclesPage extends BasePage {
     }
 
     canShowMore() {
-        throw new Error('not implemented yet.');
         return this.filteringResults.canShowMore();
     }
 }
