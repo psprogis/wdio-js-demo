@@ -1,7 +1,7 @@
 image: node
 
 variables:
-  SELENIUM_HUB_HOST: "localhost"
+  SELENIUM_HUB_HOST: "selenium__standalone-chrome"
 
 stages:
   - start-selenoid
