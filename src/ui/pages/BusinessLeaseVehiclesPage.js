@@ -48,6 +48,10 @@ class BusinessLeaseVehiclesPage extends BasePage {
         return this.filteringResults.getAllResults();
     }
 
+    resetAllFilters() {
+        $('[data-key="resetFilters"]').click();
+    }
+
     canShowMore() {
         throw new Error('not implemented yet.');
         return this.filteringResults.canShowMore();

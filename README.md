@@ -19,7 +19,7 @@ Tools: !describe all tools and links!.
 
 ## General automation overview
 The following chart describes typical automation "framework" building blocks:
-![console output](screenshots/automation-overview.png "console output")
+![automation overview](screenshots/automation-overview.png "automation overview")
 [original file on a google drive](https://docs.google.com/drawings/d/1qBoop81kclCIlnatuc5pULY_7pAlh3nD3PX2sYrv6j4/edit?usp=sharing)
 Key features:
 - high-level, clear, readable, easy to understand, verbose specs. Contains only test logic (business cases). Do not contain any webdriver (other frameworks) calls and low-level methods.
@@ -85,12 +85,15 @@ Starting web server...
 ## Run on CI
 ### Run on gitlab
 !insert screenshots!
+
 ### Run on github actions
-!insert screenshots!
+![github-actions](screenshots/github-actions-run.png "github actions")
+You can find more information about each run on [Actions tab](https://github.com/psprogis/wdio-js-demo/actions) in github
 
 ## Todo
-- add automation diagram.
 - extract common verification steps and re-use them in several testcases.
+- implement more UI components/widget: MonthlyPriceFilter, MoreFilters filter, etc.  
 - add "cucumber" (allure) [steps](https://webdriver.io/docs/allure-reporter).
-- cleanup gitlab stages: cache node_modules in install and test, configure nginx on a runner to display allure report, etc.
+- cleanup gitlab stages.
+- gitlab: post results to [allure server](https://github.com/kochetkov-ma/allure-server), use nginx or find another way to serve report.  
 - (minor) eslint default parser does not work with static properties, fix configuration with babel-parser.
