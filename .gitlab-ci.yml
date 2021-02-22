@@ -1,4 +1,4 @@
-image: node
+image: node:14.15.5-alpine3.10
 
 variables:
   SELENIUM_HUB_HOST: "selenium__standalone-chrome"
@@ -29,6 +29,9 @@ test:
 report:
   stage: report
   script:
+    - apk add openjdk11
+    - JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+    - export JAVA_HOME
     - npm run report:generate
   artifacts:
     expire_in: 30 days
