@@ -29,39 +29,71 @@ describe('business lease filtering feature', () => {
         businessLeasePage.fuelFilter.selectSingleItem({ name: 'Diesel' });
 
         const filteringResults = businessLeasePage.getFilteringResults();
+
+        expect(businessLeasePage.getTotalCarsNumber()).toBeGreaterThan(2000);
+        expect(filteringResults.length).toBe(12);
+
+        // we can assert all results or just check <n> items (see the next case)
+        expect(filteringResults).toEqual(dieselFilteringResults);
+    });
+
+    it.skip('should filter by 2+ criteria of the same filter', () => {
+        businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric', 'Hybrid'] });
+
+        const filteringResults = businessLeasePage.getFilteringResults();
         log.info(filteringResults);
 
         expect(businessLeasePage.getTotalCarsNumber()).toBeGreaterThan(2000);
         expect(filteringResults.length).toBe(12);
 
-        // expect(businessLeasePage.canShowMore()).toBe(true);
-
-        // we can assert all results
-        // expect(filteringResults).toEqual(dieselFilteringResults);
-        // or just check 2 items
+        // assert only 2 items or we can extract common verification logic into private function (see the next case)
         expect(filteringResults).toEqual(expect.arrayContaining([
             {
                 description: { topText: '23 to choose from', heading: 'BMW 3' },
                 price: { localizedPrice: '€ 531' },
             },
             {
-                description: { topText: '24 to choose from', heading: 'Volvo Xc40' },
+                description: { topText: '31 to choose from', heading: 'Volvo Xc40' },
                 price: { localizedPrice: '€ 464' },
             },
         ]));
     });
 
-    it.skip('should filter by 2+ criteria of the same filter', () => {
-        businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric', 'Hybrid'] });
-        // TODO: extract common verification part and use it here
-    });
-
-    it.skip('should work with multiple filters', () => {
+    it('should work with multiple filters', () => {
         businessLeasePage.fuelFilter.selectMultipleItems({ names: ['Diesel', 'Electric'] });
         businessLeasePage.popularFiltersFilter.selectSingleItem({ name: 'Best deals' });
         businessLeasePage.makeModelFilter.selectSingleItem({ name: 'Tesla' })
 
-        // TODO: extract common verification part and use it here
+        const filteringResults = businessLeasePage.getFilteringResults();
+        log.info(filteringResults);
+
+        assertFilteringResults({
+            totalCarsNumber: businessLeasePage.getTotalCarsNumber(),
+            filteringResults,
+            expected: {
+                totalNumber: 2,
+                resultsLength: 2,
+                equal: [
+                    {
+                        description: {
+                            topText: 'MY2021 - Available 3 months after reservation',
+                            heading: 'Tesla 3'
+                        },
+                        price: { localizedPrice: '€ 625' }
+                    },
+                    {
+                        description: {
+                            topText: 'MY2021 - Available 3 months after reservation',
+                            heading: 'Tesla 3'
+                        },
+                        price: { localizedPrice: '€ 729' }
+                    }
+                ],
+            }
+        });
+
+        // for most common cases we can extract test data into separate file and generate tests using forEach
+        // see example here: https://github.com/psprogis/protractor-automationpractice/blob/master/specs/search.spec.js#L18
     });
 
     it('should reset all selected filters', () => {
@@ -80,8 +112,6 @@ describe('business lease filtering feature', () => {
         expect(filtersAfterReset).toEqual(defaultFilterNames);
     });
 
-    it.skip('filters should be displayed after scrolling the page');
-
     it('should allow to show more filtered results', () => {
         businessLeasePage.fuelFilter.selectSingleItem({ name: 'Electric' });
         businessLeasePage.filteringResults.showMoreFilteredCars();
@@ -91,12 +121,19 @@ describe('business lease filtering feature', () => {
         expect(filteringResults.length).toBeGreaterThan(12);
     });
 
+    it.skip('filters should be displayed after scrolling the page');
+
     // TODO:
     // - add separate spec for quick filters
     // - create 2 specs: simple filtering and second one for the complex scenarios
     // add the following cases:
     //  - should save filters
     //  - should contain more filters, try body type and transmission
+    //  - check url is changed: e.g.: ?fuelTypes=diesel,electric,hybrid ?
 });
 
-
+function assertFilteringResults({ totalCarsNumber, filteringResults, expected }) {
+    expect(totalCarsNumber).toEqual(expected.totalNumber);
+    expect(filteringResults.length).toBe(expected.resultsLength);
+    expect(filteringResults).toEqual(expected.equal);
+}
