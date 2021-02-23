@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "cleanup": "rimraf allure-results allure-report",
-    "test": "wdio run wdio.conf.js",
+    "test": "npm run cleanup && wdio run wdio.conf.js",
     "repl": "wdio repl chrome",
     "report": "allure generate && allure open",
     "report:generate": "allure generate",

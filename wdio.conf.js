@@ -66,9 +66,9 @@ const wdioConfig = {
     },
 
     afterStep: function(test, context, { error, result, duration, passed, retries }) {
-        if (error) {
+        // if (error) {
             browser.takeScreenshot();
-        }
+        // }
     },
 }
 

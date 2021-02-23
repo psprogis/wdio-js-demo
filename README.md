@@ -2,11 +2,12 @@ This repo contains examples of a filtering tests for [LeasePlan business showroo
 Tools:
 - [webdriver.io@7](https://webdriver.io/)
 - [mocha](https://mochajs.org/) and built-in [expect](https://webdriver.io/docs/api/expect-webdriverio/).
-- CI: [github actions](https://github.com/features/actions), [gitlab](https://gitlab.com/).  
+- CI: [github actions](https://github.com/features/actions), [gitlab](https://gitlab.com/).
+- reporting: [allure](http://allure.qatools.ru/), [spec](https://webdriver.io/docs/spec-reporter)
 - [eslint](https://eslint.org/) with [wdio-plugin](https://www.npmjs.com/package/eslint-plugin-wdio).  
 - [log4js](https://log4js-node.github.io/log4js-node/) for logging.
 
-**Table of Contents**
+## Table of Contents
 1. [General automation overview](#general-automation-overview)
 3. [Local run](#local-run)
   1. [Preconditions and environment](#preconditions-and-environment)
@@ -20,7 +21,7 @@ Tools:
 ## General automation overview
 The following chart describes typical automation "framework" building blocks:
 ![automation overview](screenshots/automation-overview.png "automation overview")
-[original file on a google drive](https://docs.google.com/drawings/d/1qBoop81kclCIlnatuc5pULY_7pAlh3nD3PX2sYrv6j4/edit?usp=sharing)
+[original file on a google drive](https://docs.google.com/drawings/d/1qBoop81kclCIlnatuc5pULY_7pAlh3nD3PX2sYrv6j4/edit?usp=sharing)  
 Key features:
 - high-level, clear, readable, easy to understand, verbose specs. Contains only test logic (business cases). Do not contain any webdriver (other frameworks) calls and low-level methods.
 - decouples test logic, test data, and implementation (work with the browser, network, database, etc).
@@ -30,8 +31,8 @@ Key features:
 
 ## Local run
 ### Preconditions and environment
-* Test should work on any linux/unix (CentOS, RedHat, Fedora, etc.) and Windows 10 (start from GitBash)
-* node.js version v12.20.0 (or higher)
+* Test should work on any linux/unix (CentOS, RedHat, Fedora, etc.) and Windows 10
+* node.js version v14.15.5 (or higher)
 ```bash
 node -v
 v14.15.5
@@ -42,29 +43,28 @@ npm -v
 6.14.8
 ```
 Note: do not use npm 7+, it is still unstable and has some compatibility issues, e.g. `package-lock` breaking changes.
-* jdk11+ if you run selenium-standalone.
-* python3 and VSBuild tools since wdio works with fibers (will be installed during node.js installation).
-  You should not do any additional installation with node14+, but if you get the following errors:
+* optional, if you prefer to run selenium-standalone instead of [chromedriver service](https://webdriver.io/docs/wdio-chromedriver-service/):
+  * jdk11+, java also required to generate allure report locally.
+  * python3 and VSBuild tools since wdio works with fibers (will be installed during node.js installation). You should not do any additional installation with node14+, but if you get the following errors:
   ```bash
   MSBUILD : error MSB3428: Could not load the Visual C++ component "VCBuild.exe". To fix this, 1) install the .NET Framework 2.0 SDK, 2) install Microsoft Visual Studio 2005 or 3) add the location of the component to the system path if it is installed elsewhere.
   Failed at the fibers@5.0.0 install script
   ```
   Follow the [instructions](https://github.com/nodejs/node-gyp#on-unix) to fix this.
-  
-* (optional for run w/o chromdriver service) webdriver-manager,
+  * webdriver-manager,
   run `webdriver-manager update` to get the latest versions of drivers
-```bash
-npm i -g webdriver-manager
-webdriver-manager update
-# status after update
-webdriver-manager status
-[18:05:42] I/status - selenium standalone version available: 3.141.59 [last]
-[18:05:42] I/status - chromedriver versions available: 84.0.4147.30, 85.0.4183.87, 86.0.4240.22, 87.0.4280.88, 88.0.4324.96 [last]
-[18:05:42] I/status - geckodriver versions available: v0.27.0, v0.29.0 [last]
-[18:05:42] I/status - IEDriverServer is not present
-[18:05:42] I/status - android-sdk is not present
-[18:05:42] I/status - appium is not present
-```
+  ```bash
+  npm i -g webdriver-manager
+  webdriver-manager update
+  # status after update
+  webdriver-manager status
+  [18:05:42] I/status - selenium standalone version available: 3.141.59 [last]
+  [18:05:42] I/status - chromedriver versions available: 84.0.4147.30, 85.0.4183.87, 86.0.4240.22, 87.0.4280.88, 88.0.4324.96 [last]
+  [18:05:42] I/status - geckodriver versions available: v0.27.0, v0.29.0 [last]
+  [18:05:42] I/status - IEDriverServer is not present
+  [18:05:42] I/status - android-sdk is not present
+  [18:05:42] I/status - appium is not present
+  ```
 
 ### How to run
 ```bash
@@ -81,6 +81,7 @@ Starting web server...
 ```
 ![local run](screenshots/local-run.png "local run")
 ### Report
+For automation engineer needs spec report is 100% enough, but to track statictis and for managers and other stackholders I use industry standard, probably the most famous reporting solution - [Allure Report](https://demo.qameta.io/allure/)  
 !insert allure report!.
 
 ## Run on CI
@@ -92,8 +93,7 @@ Starting web server...
 You can find more information about each run on [Actions tab](https://github.com/psprogis/wdio-js-demo/actions) in github
 
 ## Todo
-- cleanup README, check grammar.
-- add (allure) [steps](https://webdriver.io/docs/allure-reporter).
+- add allure [steps](https://webdriver.io/docs/allure-reporter).
 - start selenoid on gitlab, instead of selenium standalone service.
 - implement more UI components/widget: MonthlyPriceFilter, MoreFilters filter, etc.
 - cleanup gitlab stages.
