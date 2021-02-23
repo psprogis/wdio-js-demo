@@ -81,11 +81,12 @@ Starting web server...
 ```
 ![local run](screenshots/local-run.png "local run")
 ### Report
-For automation engineer needs spec report is 100% enough, but to track statictis and for managers and other stackholders I use industry standard, probably the most famous reporting solution - [Allure Report](https://demo.qameta.io/allure/)  
+For automation engineer needs spec report is 100% enough, but to track statistics and for managers and other stakeholders I use industry-standard, probably the most famous reporting solution - [Allure Report](https://demo.qameta.io/allure/)  
 !insert allure report!.
 
 ## Run on CI
 ### Run on gitlab
+[gitlab project](https://gitlab.com/psprogis/wdio-js-demo), not stable yet.  
 !insert screenshots!
 
 ### Run on github actions
@@ -96,6 +97,6 @@ You can find more information about each run on [Actions tab](https://github.com
 - add allure [steps](https://webdriver.io/docs/allure-reporter).
 - start selenoid on gitlab, instead of selenium standalone service.
 - implement more UI components/widget: MonthlyPriceFilter, MoreFilters filter, etc.
-- cleanup gitlab stages.
+- cleanup gitlab stages: start gitlab local runner and debug all the issues.
 - gitlab: post results to [allure server](https://github.com/kochetkov-ma/allure-server), use nginx or find another way to serve report.  
 - (minor) eslint default parser does not work with static properties, fix configuration with babel-parser.
