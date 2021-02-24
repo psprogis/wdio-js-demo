@@ -1,3 +1,4 @@
+const log = require('log4js').getLogger('business-showroom');
 const BasePage = require('./BasePage');
 const OnPageFilters = require('../components/OnPageFilters');
 const FilteringResults = require('../components/FilteringResults');
@@ -40,8 +41,23 @@ class BusinessLeaseVehiclesPage extends BasePage {
     }
 
     getFilterNames() {
-        // TODO: use existing filter classes here
-        return $$('[data-component="desktop-filters"] [data-e2e-heading]').map(element => element.getText());
+        // TODO: use existing filter classes here, move "improved" getText into Filter class
+        // run on CI is slow, do not return text right away, wait until it is not empty.
+        return $$('[data-component="desktop-filters"] [data-e2e-heading]').map(element => {
+            let currentText;
+
+            browser.waitUntil(() => {
+                currentText = element.getText();
+                log.debug(`filter's text: ${currentText}`);
+
+                return currentText !== '';
+            }, {
+                timeout: 3000,
+                timeoutMsg: "filter's name is empty after 3 seconds.",
+            });
+
+            return currentText;
+        });
     }
 
     getFilteringResults() {
