@@ -1,3 +1,5 @@
+const log = require('log4js').getLogger('base-page');
+
 class BasePage {
     open(path) {
         return browser.url(path);
@@ -14,9 +16,10 @@ class BasePage {
             acceptButton.click();
         } catch (e) {
             // got unexpected error
-            if (!e.message.includes('element not interactable')) {
-                throw e;
-            }
+            // if (!e.message.includes('element not interactable')) {
+            //     throw e;
+            // }
+            log.warn(e);
         }
 
         // or remove all the trash from view
