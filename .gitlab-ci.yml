@@ -1,8 +1,9 @@
+# TODO: try to use ubuntu:latest
 image: node:14.15.5-alpine3.10
 
 variables:
-  SELENIUM_HUB_HOST: "localhost"
-#  SELENIUM_HUB_HOST: "selenium__standalone-chrome"
+#  SELENIUM_HUB_HOST: "localhost"
+  SELENIUM_HUB_HOST: "selenium__standalone-chrome"
 
 stages:
   - test
@@ -24,9 +25,11 @@ test:
   stage: test
   services:
     - selenium/standalone-chrome
-  before_script:
-    - curl -s https://aerokube.com/cm/bash | bash && ./cm selenoid start
-    - curl http://localhost:4444/status
+#  before_script:
+#    - apk add bash
+#    - apk add curl
+#    - curl -s https://aerokube.com/cm/bash | bash && ./cm selenoid start
+#    - curl http://localhost:4444/status
   script:
     - npm cit
 
