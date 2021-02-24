@@ -37,3 +37,4 @@ report:
     expire_in: 30 days
     paths:
       - allure-report
+  when: always
