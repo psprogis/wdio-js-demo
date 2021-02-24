@@ -66,10 +66,14 @@ const wdioConfig = {
         browser.setWindowSize(1600, 1000);
     },
 
+    afterTest: function (test, context, { error, result, duration, passed, retries }) {
+        browser.takeScreenshot();
+    },
+
     afterStep: function(test, context, { error, result, duration, passed, retries }) {
-        // if (error) {
+        if (error) {
             browser.takeScreenshot();
-        // }
+        }
     },
 }
 
