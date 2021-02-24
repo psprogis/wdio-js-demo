@@ -1,4 +1,5 @@
 require('./log4js-config').init();
+const log = require('log4js').getLogger('wdio-config');
 
 const wdioConfig = {
     runner: 'local',
@@ -86,5 +87,8 @@ if (process.env.DEBUG === '1') {
     wdioConfig['execArgv'] = ['--inspect=127.0.0.1:5858'];
     wdioConfig.mochaOpts.timeout = 360000;
 }
+
+log.info('running wdio with config file:');
+log.info(wdioConfig);
 
 exports.config = wdioConfig;
