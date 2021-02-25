@@ -24,7 +24,12 @@ test:
   stage: test
 #  services:
 #    - selenium/standalone-chrome
-  before_script:
+#  before_script:
+  artifacts:
+    expire_in: 30 days
+    paths:
+      - wd.out.txt
+  script:
     - apk add openjdk11
     - apk add curl
     - npm i -g webdriver-manager
@@ -32,11 +37,6 @@ test:
     - webdriver-manager status
     - webdriver-manager start >wd.out.txt 2>&1 &
     - curl http://localhost:4444/wd/hub/status
-  artifacts:
-    expire_in: 30 days
-    paths:
-      - wd.out.txt
-  script:
     - npm cit
 
 report:
