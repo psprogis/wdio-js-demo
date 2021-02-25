@@ -14,7 +14,6 @@ stages:
 #  stage: start-selenoid
 #  script:
 #    - curl -s https://aerokube.com/cm/bash | bash && ./cm selenoid start
-#    - curl http://localhost:4444/status
 
 cache:
   paths:
@@ -27,12 +26,16 @@ test:
     - selenium/standalone-chrome
   before_script:
     - apk add openjdk11
-    - JAVA_HOME=/usr/lib/jvm/java-11-openjdk
-    - export JAVA_HOME
+    - apk add curl
     - npm i -g webdriver-manager
     - webdriver-manager update
     - webdriver-manager status
-    - webdriver-manager start
+    - webdriver-manager start >wd.out.txt 2>&1 &
+    - curl http://localhost:4444/wd/hub/status
+  artifacts:
+    expire_in: 30 days
+    paths:
+      - wd.out.txt
   script:
     - npm cit
 
