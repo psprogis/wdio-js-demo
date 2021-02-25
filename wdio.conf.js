@@ -87,6 +87,7 @@ if (process.env.SELENIUM_HUB_HOST) {
 
 if (process.env.GITLAB_CI) {
     wdioConfig.connectionRetryTimeout = 240000;
+    wdioConfig.mochaOpts.timeout = 240000;
 }
 
 if (process.env.DEBUG === '1') {
