@@ -85,6 +85,10 @@ if (process.env.SELENIUM_HUB_HOST) {
     wdioConfig.services = ["chromedriver"];
 }
 
+if (process.env.GITLAB_CI) {
+    wdioConfig.connectionRetryTimeout = 240000;
+}
+
 if (process.env.DEBUG === '1') {
     console.log('###### Running in debug mode! ######');
     wdioConfig.maxInstances = 1;
