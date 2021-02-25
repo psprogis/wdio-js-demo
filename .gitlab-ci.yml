@@ -2,8 +2,8 @@
 image: node:14.15.5-alpine3.10
 
 variables:
-  SELENIUM_HUB_HOST: "localhost"
-#  SELENIUM_HUB_HOST: "selenium__standalone-chrome"
+#  SELENIUM_HUB_HOST: "localhost"
+  SELENIUM_HUB_HOST: "selenium__standalone-chrome"
 
 stages:
   - test
@@ -22,21 +22,21 @@ cache:
 
 test:
   stage: test
-#  services:
-#    - selenium/standalone-chrome
+  services:
+    - selenium/standalone-chrome
 #  before_script:
-  artifacts:
-    expire_in: 30 days
-    paths:
-      - wd.out.txt
+#    - apk add openjdk11
+#    - apk add curl
+#    - npm i -g webdriver-manager
+#    - webdriver-manager update
+#    - webdriver-manager status
+#    - webdriver-manager start >wd.out.txt 2>&1 &
+#    - curl http://localhost:4444/wd/hub/status
+#  artifacts:
+#    expire_in: 30 days
+#    paths:
+#      - wd.out.txt
   script:
-    - apk add openjdk11
-    - apk add curl
-    - npm i -g webdriver-manager
-    - webdriver-manager update
-    - webdriver-manager status
-    - webdriver-manager start >wd.out.txt 2>&1 &
-    - curl http://localhost:4444/wd/hub/status
     - npm cit
 
 report:
