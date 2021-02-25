@@ -26,6 +26,9 @@ test:
   services:
     - selenium/standalone-chrome
   before_script:
+    - apk add openjdk11
+    - JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+    - export JAVA_HOME
     - npm i -g webdriver-manager
     - webdriver-manager update
     - webdriver-manager status
