@@ -1,6 +1,8 @@
 const log = require('log4js').getLogger('spec-logger');
 const businessLeasePage = require('../../src/ui/pages/BusinessLeaseVehiclesPage');
+// const { businessLeasePage } = require('../../steps');
 const dieselFilteringResults = require('../../expected-results/filtering/dieselsFirstPage');
+const allure = require('@wdio/allure-reporter').default;
 
 describe('business lease filtering feature', () => {
 
@@ -13,6 +15,8 @@ describe('business lease filtering feature', () => {
     });
 
     beforeEach(() => {
+        allure.addFeature('filtering');
+
         businessLeasePage.open();
         businessLeasePage.acceptAllCookies();  // move to global before hook ?
     });

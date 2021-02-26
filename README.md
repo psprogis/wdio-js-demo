@@ -95,6 +95,8 @@ You can find more information about each run on [Actions tab](https://github.com
 
 ## Todo
 - add allure [steps](https://webdriver.io/docs/allure-reporter).
+  We cannot mess up components methods with steps, so it should be a new Proxy object or "steps" module that wraps up all high-level calls.  
+  see example in steps folder.
 - start selenoid on gitlab, instead of selenium standalone service.
 - implement more UI components/widget: MonthlyPriceFilter, MoreFilters filter, etc.
 - cleanup gitlab stages: start gitlab local runner and debug all the issues.
